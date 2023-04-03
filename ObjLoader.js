@@ -1,18 +1,18 @@
 
-const { BufferGeometry,
-    FileLoader,
-    Float32BufferAttribute,
-    Group,
-    LineBasicMaterial,
-    LineSegments,
-    Loader,
-    Material,
-    Mesh,
-    MeshPhongMaterial,
-    Points,
-    PointsMaterial,
-    Vector3,
-    Color} = THREE;
+const { BufferGeometry: BufferGeometry1,
+    FileLoader: FileLoader1,
+    Float32BufferAttribute: Float32BufferAttribute1,
+    Group: Group1,
+    LineBasicMaterial: LineBasicMaterial1,
+    LineSegments: LineSegments1,
+    Loader: Loader1,
+    Material: Material1,
+    Mesh: Mesh1,
+    MeshPhongMaterial: MeshPhongMaterial1,
+    Points: Points1,
+    PointsMaterial: PointsMaterial1,
+    Vector3: Vector31,
+    Color: Color1 } = THREE;
 
 // o object_name | g group_name
 const _object_pattern = /^[og]\s*(.+)?/;
@@ -24,14 +24,14 @@ const _material_use_pattern = /^usemtl /;
 const _map_use_pattern = /^usemap /;
 const _face_vertex_data_separator_pattern = /\s+/;
 
-const _vA = new Vector3();
-const _vB = new Vector3();
-const _vC = new Vector3();
+const _vA = new Vector31();
+const _vB = new Vector31();
+const _vC = new Vector31();
 
-const _ab = new Vector3();
-const _cb = new Vector3();
+const _ab = new Vector31();
+const _cb = new Vector31();
 
-const _color = new Color();
+const _color = new Color1();
 
 function ParserState() {
 
@@ -432,7 +432,7 @@ function ParserState() {
 
 //
 
-class OBJLoader extends Loader {
+class OBJLoader extends Loader1 {
 
     constructor( manager ) {
 
@@ -446,7 +446,7 @@ class OBJLoader extends Loader {
 
         const scope = this;
 
-        const loader = new FileLoader( this.manager );
+        const loader = new FileLoader1( this.manager );
         loader.setPath( this.path );
         loader.setRequestHeader( this.requestHeader );
         loader.setWithCredentials( this.withCredentials );
@@ -714,7 +714,7 @@ class OBJLoader extends Loader {
 
         state.finalize();
 
-        const container = new Group();
+        const container = new Group1();
         container.materialLibraries = [].concat( state.materialLibraries );
 
         const hasPrimitives = ! ( state.objects.length === 1 && state.objects[ 0 ].geometry.vertices.length === 0 );
@@ -733,26 +733,26 @@ class OBJLoader extends Loader {
                 // Skip o/g line declarations that did not follow with any faces
                 if ( geometry.vertices.length === 0 ) continue;
 
-                const buffergeometry = new BufferGeometry();
+                const buffergeometry = new BufferGeometry1();
 
-                buffergeometry.setAttribute( 'position', new Float32BufferAttribute( geometry.vertices, 3 ) );
+                buffergeometry.setAttribute( 'position', new Float32BufferAttribute1( geometry.vertices, 3 ) );
 
                 if ( geometry.normals.length > 0 ) {
 
-                    buffergeometry.setAttribute( 'normal', new Float32BufferAttribute( geometry.normals, 3 ) );
+                    buffergeometry.setAttribute( 'normal', new Float32BufferAttribute1( geometry.normals, 3 ) );
 
                 }
 
                 if ( geometry.colors.length > 0 ) {
 
                     hasVertexColors = true;
-                    buffergeometry.setAttribute( 'color', new Float32BufferAttribute( geometry.colors, 3 ) );
+                    buffergeometry.setAttribute( 'color', new Float32BufferAttribute1( geometry.colors, 3 ) );
 
                 }
 
                 if ( geometry.hasUVIndices === true ) {
 
-                    buffergeometry.setAttribute( 'uv', new Float32BufferAttribute( geometry.uvs, 2 ) );
+                    buffergeometry.setAttribute( 'uv', new Float32BufferAttribute1( geometry.uvs, 2 ) );
 
                 }
 
@@ -771,17 +771,17 @@ class OBJLoader extends Loader {
                         material = this.materials.create( sourceMaterial.name );
 
                         // mtl etc. loaders probably can't create line materials correctly, copy properties to a line material.
-                        if ( isLine && material && ! ( material instanceof LineBasicMaterial ) ) {
+                        if ( isLine && material && ! ( material instanceof LineBasicMaterial1 ) ) {
 
-                            const materialLine = new LineBasicMaterial();
-                            Material.prototype.copy.call( materialLine, material );
+                            const materialLine = new LineBasicMaterial1();
+                            Material1.prototype.copy.call( materialLine, material );
                             materialLine.color.copy( material.color );
                             material = materialLine;
 
-                        } else if ( isPoints && material && ! ( material instanceof PointsMaterial ) ) {
+                        } else if ( isPoints && material && ! ( material instanceof PointsMaterial1 ) ) {
 
-                            const materialPoints = new PointsMaterial( { size: 10, sizeAttenuation: false } );
-                            Material.prototype.copy.call( materialPoints, material );
+                            const materialPoints = new PointsMaterial1( { size: 10, sizeAttenuation: false } );
+                            Material1.prototype.copy.call( materialPoints, material );
                             materialPoints.color.copy( material.color );
                             materialPoints.map = material.map;
                             material = materialPoints;
@@ -794,15 +794,15 @@ class OBJLoader extends Loader {
 
                         if ( isLine ) {
 
-                            material = new LineBasicMaterial();
+                            material = new LineBasicMaterial1();
 
                         } else if ( isPoints ) {
 
-                            material = new PointsMaterial( { size: 1, sizeAttenuation: false } );
+                            material = new PointsMaterial1( { size: 1, sizeAttenuation: false } );
 
                         } else {
 
-                            material = new MeshPhongMaterial();
+                            material = new MeshPhongMaterial1();
 
                         }
 
@@ -833,15 +833,15 @@ class OBJLoader extends Loader {
 
                     if ( isLine ) {
 
-                        mesh = new LineSegments( buffergeometry, createdMaterials );
+                        mesh = new LineSegments1( buffergeometry, createdMaterials );
 
                     } else if ( isPoints ) {
 
-                        mesh = new Points( buffergeometry, createdMaterials );
+                        mesh = new Points1( buffergeometry, createdMaterials );
 
                     } else {
 
-                        mesh = new Mesh( buffergeometry, createdMaterials );
+                        mesh = new Mesh1( buffergeometry, createdMaterials );
 
                     }
 
@@ -849,15 +849,15 @@ class OBJLoader extends Loader {
 
                     if ( isLine ) {
 
-                        mesh = new LineSegments( buffergeometry, createdMaterials[ 0 ] );
+                        mesh = new LineSegments1( buffergeometry, createdMaterials[ 0 ] );
 
                     } else if ( isPoints ) {
 
-                        mesh = new Points( buffergeometry, createdMaterials[ 0 ] );
+                        mesh = new Points1( buffergeometry, createdMaterials[ 0 ] );
 
                     } else {
 
-                        mesh = new Mesh( buffergeometry, createdMaterials[ 0 ] );
+                        mesh = new Mesh1( buffergeometry, createdMaterials[ 0 ] );
 
                     }
 
@@ -875,20 +875,20 @@ class OBJLoader extends Loader {
 
             if ( state.vertices.length > 0 ) {
 
-                const material = new PointsMaterial( { size: 1, sizeAttenuation: false } );
+                const material = new PointsMaterial1( { size: 1, sizeAttenuation: false } );
 
-                const buffergeometry = new BufferGeometry();
+                const buffergeometry = new BufferGeometry1();
 
-                buffergeometry.setAttribute( 'position', new Float32BufferAttribute( state.vertices, 3 ) );
+                buffergeometry.setAttribute( 'position', new Float32BufferAttribute1( state.vertices, 3 ) );
 
                 if ( state.colors.length > 0 && state.colors[ 0 ] !== undefined ) {
 
-                    buffergeometry.setAttribute( 'color', new Float32BufferAttribute( state.colors, 3 ) );
+                    buffergeometry.setAttribute( 'color', new Float32BufferAttribute1( state.colors, 3 ) );
                     material.vertexColors = true;
 
                 }
 
-                const points = new Points( buffergeometry, material );
+                const points = new Points1( buffergeometry, material );
                 container.add( points );
 
             }
